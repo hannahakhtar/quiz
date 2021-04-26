@@ -1,11 +1,25 @@
+import React from 'react'
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+
 import './App.scss';
 
+import Home from './components/Home'
+import Selection from './components/Selection'
+import Quiz from './components/Quiz'
+
+
 function App() {
-  return (
-    <div className="App">
-      <h1>Quiz App</h1>
-    </div>
-  );
+  return <>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/quiz-app" component={Home} />
+        <Route exact path="/quiz-app/selection" component={Selection} />
+        <Route exact path="/quiz-app/play" component={Quiz} />
+        <Redirect to="/quiz-app/not-found"/>
+      </Switch>
+    </BrowserRouter>
+  </>
+
 }
 
-export default App;
+export default App
