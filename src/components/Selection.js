@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 
 const Selection = () => {
 
-  // ? have button disabled until user has chosen the category and question amount.
-
   const [category, setCategory] = useState('')
   const [questionAmount, setQuestionAmount] = useState('')
 
@@ -45,12 +43,13 @@ const Selection = () => {
       <option value="10">10</option>
       <option value="15">15</option>
       <option value="20">20</option>
-      <option value="25">25</option>
     </select>
+    {category && questionAmount && 
     <Link to={{
       pathname: "/quiz-app/play",
       state: { category, questionAmount }
     }}>Play!</Link>
+  }
   </>
 }
 

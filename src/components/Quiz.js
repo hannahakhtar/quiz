@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
+import Loader from 'react-loader-spinner'
 
 const Quiz = ({ location }) => {
 
-  // ? if location is undefined, take user back to home page (have button and say they need to make a selection first)
-  // ? how to use token
+  // ? use token so local storage remembers questions already asked
   // ? tidy up the special characters
 
   const [loading, setLoading] = useState(true)
@@ -13,19 +14,26 @@ const Quiz = ({ location }) => {
   const [correctAnswer, setCorrectAnswer] = useState([])
   const [incorrectAnswers, setIncorrectAnswers] = useState([])
   const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [isError, setIsError] = useState(false)
   let [score, setScore] = useState(0)
+
 
   const category = location.state.category
   const questionAmount = location.state.questionAmount
 
   useEffect(() => {
     async function fetchQuizData() {
-      const { data } = await axios.get(`https://opentdb.com/api.php?amount=${questionAmount}&${!category ? '' : 'category'}=${category}`)
-      setQuizData(data.results)
-      setDisplayQuestion(data.results[0].question)
-      setCorrectAnswer(data.results[0].correct_answer)
-      setIncorrectAnswers(data.results[0].incorrect_answers)
-      setLoading(false)
+      try {
+        const { data } = await axios.get(`https://opentdb.com/api.php?amount=${questionAmount}&${!category ? '' : 'category'}=${category}`)
+        setQuizData(data.results)
+        setDisplayQuestion(data.results[0].question)
+        setCorrectAnswer(data.results[0].correct_answer)
+        setIncorrectAnswers(data.results[0].incorrect_answers)
+        setLoading(false)
+      } catch (error) {
+        setIsError(true)
+        setLoading(false)
+      }
     }
     fetchQuizData()
   }, [category, questionAmount])
@@ -34,6 +42,7 @@ const Quiz = ({ location }) => {
     const correct = [correctAnswer]
     const incorrect = incorrectAnswers
     const answers = correct.concat(incorrect)
+    
     return <div>
       {answers.sort().map((answer, i) => {
         return <button key={i} onClick={() => checkAnswers(answer)}>{answer}</button>
@@ -62,8 +71,20 @@ const Quiz = ({ location }) => {
   }
 
   if (loading) {
-    // ? add spinner here
-    return <div>loading...</div>
+    return <Loader 
+    type="Puff"
+    color="#00BFFF"
+    height={100}
+    width={100}
+    timeout={3000}
+    />
+  }
+
+  if (isError) {
+    return <>
+    <h2>There are not enough questions available for this category.</h2>
+    <Link to={{ pathname: "/quiz-app/selection" }}>Try again?</Link>
+    </>
   }
 
   return <>

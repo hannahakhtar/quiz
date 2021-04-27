@@ -11,3 +11,9 @@ const Home = () => {
 }
 
 export default Home
+
+// * To add:
+// * Mobile
+// * Testing
+// * Local Storage
+// * accessibility?
