@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const Selection = () => {
+
+  // ? have button disabled until user has chosen the category and question amount.
+
   const [category, setCategory] = useState('')
-  const [questionNo, setQuestionNo] = useState('')
+  const [questionAmount, setQuestionAmount] = useState('')
 
   return <>
     <h1>Choose your category and difficulty</h1>
@@ -28,6 +31,7 @@ const Selection = () => {
       <option value="23">History</option>
       <option value="20">Mythology</option>
       <option value="24">Politics</option>
+      <option value="">Random</option>
       <option value="17">Science & Nature</option>
       <option value="18">Science: Computers</option>
       <option value="19">Science: Mathematics</option>
@@ -36,7 +40,7 @@ const Selection = () => {
       <option value="28">Vehicles</option>
     </select>
     <label id="numberOfQuestions">Choose the number of questions</label>
-    <select onChange={e => setQuestionNo(e.target.value)}>
+    <select onChange={e => setQuestionAmount(e.target.value)}>
     <option disable="true" >Choose number of questions...</option>
       <option value="10">10</option>
       <option value="15">15</option>
@@ -45,7 +49,7 @@ const Selection = () => {
     </select>
     <Link to={{
       pathname: "/quiz-app/play",
-      state: { category, questionNo }
+      state: { category, questionAmount }
     }}>Play!</Link>
   </>
 }
