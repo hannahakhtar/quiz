@@ -5,9 +5,6 @@ import Loader from 'react-loader-spinner'
 
 const Quiz = ({ location }) => {
 
-  // ? use token so local storage remembers questions already asked
-  // ? tidy up the special characters
-
   const [loading, setLoading] = useState(true)
   const [quizData, setQuizData] = useState([])
   const [displayQuestion, setDisplayQuestion] = useState('')
@@ -15,7 +12,7 @@ const Quiz = ({ location }) => {
   const [incorrectAnswers, setIncorrectAnswers] = useState([])
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [isError, setIsError] = useState(false)
-  let [score, setScore] = useState(0)
+  const [score, setScore] = useState(0)
 
 
   const category = location.state.category
@@ -24,12 +21,13 @@ const Quiz = ({ location }) => {
   useEffect(() => {
     async function fetchQuizData() {
       try {
-        const { data } = await axios.get(`https://opentdb.com/api.php?amount=${questionAmount}&${!category ? '' : 'category'}=${category}`)
+        const { data } = await axios.get(`https://opentdb.com/api.php?amount=${questionAmount}&${!category ? '' : 'category'}=${category}&encode=base64`)
         setQuizData(data.results)
         setDisplayQuestion(data.results[0].question)
         setCorrectAnswer(data.results[0].correct_answer)
         setIncorrectAnswers(data.results[0].incorrect_answers)
         setLoading(false)
+        // ? if error is becuase of one of the response calls (to do with questions or token), action and then call function again?
       } catch (error) {
         setIsError(true)
         setLoading(false)
@@ -45,7 +43,7 @@ const Quiz = ({ location }) => {
     
     return <div>
       {answers.sort().map((answer, i) => {
-        return <button key={i} onClick={() => checkAnswers(answer)}>{answer}</button>
+        return <button key={i} onClick={() => checkAnswers(answer)}>{atob(answer)}</button>
       })}
     </div>
   }
@@ -72,7 +70,7 @@ const Quiz = ({ location }) => {
 
   if (loading) {
     return <Loader 
-    type="Puff"
+    type="Circles"
     color="#00BFFF"
     height={100}
     width={100}
@@ -90,7 +88,7 @@ const Quiz = ({ location }) => {
   return <>
     <h1>Quiz</h1>
     <div>Question {currentQuestion + 1} of {questionAmount}</div>
-    <div>{displayQuestion}</div>
+    <div>{atob(displayQuestion)}</div>
     <div>
       {displayAnswers()}
     </div>
