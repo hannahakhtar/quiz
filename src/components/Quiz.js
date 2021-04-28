@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import Loader from 'react-loader-spinner'
+import { useWindowSize } from 'react-use'
+import Confetti from 'react-confetti'
+
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 const Quiz = ({ location }) => {
 
@@ -13,10 +18,11 @@ const Quiz = ({ location }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [isError, setIsError] = useState(false)
   const [score, setScore] = useState(0)
-
+  const [show, setShow] = useState(false)
 
   const category = location.state.category
   const questionAmount = location.state.questionAmount
+  const { width, height } = useWindowSize()
 
   useEffect(() => {
     async function fetchQuizData() {
@@ -40,15 +46,15 @@ const Quiz = ({ location }) => {
     const correct = [correctAnswer]
     const incorrect = incorrectAnswers
     const answers = correct.concat(incorrect)
-    
+
     return <div>
       {answers.sort().map((answer, i) => {
-        return <button key={i} onClick={() => checkAnswers(answer)}>{atob(answer)}</button>
+        return <Button key={i} onClick={() => checkAnswers(answer)}>{atob(answer)}</Button>
       })}
     </div>
   }
 
-  function checkAnswers(answer) {    
+  function checkAnswers(answer) {
     if (currentQuestion + 1 < questionAmount) {
       if (answer === correctAnswer) {
         setScore(score + 1)
@@ -63,36 +69,47 @@ const Quiz = ({ location }) => {
         setIncorrectAnswers(quizData[currentQuestion + 1].incorrect_answers)
       }
     } else {
-        alert('game over')
-        // ? show final score and confetti and button to play again which takes them back to the selection page.
+      setShow(true)
     }
   }
 
   if (loading) {
-    return <Loader 
-    type="Circles"
-    color="#00BFFF"
-    height={100}
-    width={100}
-    timeout={3000}
+    return <Loader
+      type="Circles"
+      color="#00BFFF"
+      height={100}
+      width={100}
+      timeout={3000}
     />
   }
 
   if (isError) {
     return <>
-    <h2>There are not enough questions available for this category.</h2>
-    <Link to={{ pathname: "/quiz-app/selection" }}>Try again?</Link>
+      <h2>There are not enough questions available for this category.</h2>
+      <Link to={{ pathname: "/quiz-app/selection" }}><Button>Try again?</Button></Link>
     </>
   }
 
   return <>
     <h1>Quiz</h1>
     <div>Question {currentQuestion + 1} of {questionAmount}</div>
+    <div>Score: {score}</div>
     <div>{atob(displayQuestion)}</div>
     <div>
       {displayAnswers()}
     </div>
-    <div>Score: {score}</div>
+
+    <Modal show={show}>
+      <Modal.Body>
+        <p>Your final score was {score}</p>
+        <Link to={{ pathname: "/quiz-app/selection" }}><Button>Play again?</Button></Link>
+      </Modal.Body>
+    </Modal>
+    {show &&
+      <Confetti
+        width={width}
+        height={height}
+        />}
   </>
 }
 
