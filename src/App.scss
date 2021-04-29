@@ -1,38 +1,70 @@
+// * global variables
+
 @import "node_modules/bootstrap/scss/bootstrap";
 @import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+@import url('https://fonts.googleapis.com/css2?family=Martel+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sarala&display=swap');
 
+$blue-sapphire: #22577aff;
+$cadet-blue: #38a3a5ff;
+$medium-aquamarine: #57cc99ff;
+$light-green: #80ed99ff;
+$tea-green: rgb(195, 221, 198);
+
+// * local variables
 
 body {
+  font-family: 'Martel Sans', sans-serif;
   height: 100vh;
   text-align: center;
-  background-color: black;
-  color: white;
-}
-
-h1 {
-  font-size: 8em;
+  color: black;
 }
 
 p {
   font-size: 1em;
 }
 
-// * Home page
+.btn {
+  background-color: $cadet-blue;
+  border: none;
+  padding: 0.5em;
+}
 
-#home {
+.btn:hover:active {
+  background-color: $medium-aquamarine;
+}
+
+#loader {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+}
+
+#home, #quiz {
   height: 100vh;
   width: auto;
-  border: 5px solid blue;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  background-image: url(./images/shutterstock_1818780107.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#homeContainer, #quizContainer, #gameOver {
+  padding: 2em;
+  background-color: rgba(255,255,255, 0.6);
+  border-radius: 20px;
 }
 
 #selections {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .dropdown-menu {
@@ -41,18 +73,20 @@ p {
   overflow: auto;
 }
 
-// * Quiz page
-
-#quiz {
-  height: 100vh;
-  width: auto;
-  border: 5px solid blue;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+.dropdown-item:hover {
+  background-color: blue;
 }
 
-.modal {
-  color: black;
+#playerChoice {
+  padding-top: 2em;
+}
+
+.allAnswers {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.answerButton {
+  margin: 5px;
 }

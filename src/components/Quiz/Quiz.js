@@ -6,7 +6,7 @@ import { useWindowSize } from 'react-use'
 import Confetti from 'react-confetti'
 
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import Container from 'react-bootstrap/Container';
 
 const Quiz = ({ location }) => {
 
@@ -18,7 +18,7 @@ const Quiz = ({ location }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [isError, setIsError] = useState(false)
   const [score, setScore] = useState(0)
-  const [show, setShow] = useState(false)
+  const [gameOver, setGameOver] = useState(false)
 
   // ? if user goes to app/play from url bar, they will have error because cat/question are unifned
   const category = location.state.category
@@ -48,12 +48,15 @@ const Quiz = ({ location }) => {
     const incorrect = incorrectAnswers
     const answers = correct.concat(incorrect)
 
-    return <div>
+    return <div className="allAnswers">
       {answers.sort().map((answer, i) => {
-        return <Button key={i} onClick={() => checkAnswers(answer)}>{atob(answer)}</Button>
+        return <Button key={i} className="answerButton" onClick={() => checkAnswers(answer)}>{atob(answer)}</Button>
       })}
     </div>
   }
+
+  // ? if answer is correct, turn green. If answer is wrong, turn the clicked one red and the right answer green. After one second, do everything else.
+  // ? why is the button staying as clicked, even when the next question displays?
 
   function checkAnswers(answer) {
     if (currentQuestion + 1 < questionAmount) {
@@ -70,18 +73,20 @@ const Quiz = ({ location }) => {
         setIncorrectAnswers(quizData[currentQuestion + 1].incorrect_answers)
       }
     } else {
-      setShow(true)
+      setGameOver(true)
     }
   }
 
   if (loading) {
-    return <Loader
+    return <div id="loader">
+    <Loader
       type="Circles"
       color="#00BFFF"
-      height={100}
-      width={100}
+      height={200}
+      width={200}
       timeout={3000}
     />
+    </div>
   }
 
   if (isError) {
@@ -91,27 +96,29 @@ const Quiz = ({ location }) => {
     </>
   }
 
-  return <>
-    <h1>Quiz</h1>
-    <div>Question {currentQuestion + 1} of {questionAmount}</div>
-    <div>Score: {score}</div>
-    <div>{atob(displayQuestion)}</div>
-    <div>
-      {displayAnswers()}
-    </div>
-
-    <Modal show={show} class="modal">
-      <Modal.Body>
+  return <div id="quiz">
+    {!gameOver &&
+      <Container id="quizContainer">
+        <h2>Question {currentQuestion + 1} of {questionAmount}</h2>
+        <h2>Score: {score}</h2>
+        <div>{atob(displayQuestion)}</div>
+        <div>
+          {displayAnswers()}
+        </div>
+      </Container>
+    }
+    {gameOver &&
+      <Container id="gameOver">
+        <p>Congratulations!</p>
         <p>Your final score was {score}</p>
         <Link to={{ pathname: "/quiz-app/" }}><Button>Play again?</Button></Link>
-      </Modal.Body>
-    </Modal>
-    {show &&
-      <Confetti
-        width={width}
-        height={height}
-        />}
-  </>
+        <Confetti
+          width={width}
+          height={height}
+        />
+      </Container>
+    }
+  </div>
 }
 
 export default Quiz
