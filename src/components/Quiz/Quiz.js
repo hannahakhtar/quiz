@@ -48,7 +48,7 @@ const Quiz = ({ location }) => {
     const incorrect = incorrectAnswers
     const answers = correct.concat(incorrect)
 
-    return <div className="allAnswers">
+    return <div id="allAnswers">
       {answers.sort().map((answer, i) => {
         return <Button key={i} className="answerButton" onClick={() => checkAnswers(answer)}>{atob(answer)}</Button>
       })}
@@ -109,8 +109,8 @@ const Quiz = ({ location }) => {
     }
     {gameOver &&
       <Container id="gameOver">
-        <p>Congratulations!</p>
-        <p>Your final score was {score}</p>
+        <h2>Congratulations!</h2>
+        <h2>Your final score was {score}</h2>
         <Link to={{ pathname: "/quiz-app/" }}><Button>Play again?</Button></Link>
         <Confetti
           width={width}

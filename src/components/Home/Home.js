@@ -32,7 +32,7 @@ const Home = () => {
         <p>Good luck!</p>
       </Container>
       <Container id="selections">
-        <Dropdown>
+        <Dropdown className="dropdown">
           <Dropdown.Toggle id="categoryDropdown">
             {categoryToggle}
           </Dropdown.Toggle>
@@ -64,7 +64,7 @@ const Home = () => {
             <Dropdown.Item onSelect={handleCategorySelect} eventKey="28">Vehicles</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        <Dropdown>
+        <Dropdown className="dropdown">
           <Dropdown.Toggle id="questionNumberDropdown">
             {questionsToggle}
           </Dropdown.Toggle>
@@ -78,13 +78,13 @@ const Home = () => {
       </Container>
       <Container>
         {categoryKey && questionAmount &&
-          <>
+          <div id="letsGo">
             <p id="playerChoice">You've chosen {questionAmount} questions from the "{categoryName}" category!</p>
             <Link to={{
               pathname: "/quiz-app/play",
               state: { categoryKey, questionAmount }
             }}><Button variant="primary">Let's Go!</Button></Link>
-          </>
+          </div>
         }
       </Container>
     </Container>
