@@ -20,6 +20,7 @@ const Quiz = ({ location }) => {
   const [score, setScore] = useState(0)
   const [show, setShow] = useState(false)
 
+  // ? if user goes to app/play from url bar, they will have error because cat/question are unifned
   const category = location.state.category
   const questionAmount = location.state.questionAmount
   const { width, height } = useWindowSize()
@@ -86,7 +87,7 @@ const Quiz = ({ location }) => {
   if (isError) {
     return <>
       <h2>There are not enough questions available for this category.</h2>
-      <Link to={{ pathname: "/quiz-app/selection" }}><Button>Try again?</Button></Link>
+      <Link to={{ pathname: "/quiz-app/" }}><Button>Choose again?</Button></Link>
     </>
   }
 
@@ -99,10 +100,10 @@ const Quiz = ({ location }) => {
       {displayAnswers()}
     </div>
 
-    <Modal show={show}>
+    <Modal show={show} class="modal">
       <Modal.Body>
         <p>Your final score was {score}</p>
-        <Link to={{ pathname: "/quiz-app/selection" }}><Button>Play again?</Button></Link>
+        <Link to={{ pathname: "/quiz-app/" }}><Button>Play again?</Button></Link>
       </Modal.Body>
     </Modal>
     {show &&
