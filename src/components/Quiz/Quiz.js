@@ -19,14 +19,14 @@ const Quiz = ({ location }) => {
   const [score, setScore] = useState(0)
   const [gameOver, setGameOver] = useState(false)
 
-  const category = location.state.category
+  const category = location.state.categoryKey
   const questionAmount = location.state.questionAmount
   const { width, height } = useWindowSize()
 
   useEffect(() => {
     async function fetchQuizData() {
       try {
-        const { data } = await axios.get(`https://opentdb.com/api.php?amount=${questionAmount}&${!category ? '' : 'category'}=${category}&encode=base64`)
+        const { data } = await axios.get(`https://opentdb.com/api.php?amount=${questionAmount}&${category ? 'category' : ''}=${category}&encode=base64`)
         setQuizData(data.results)
         setDisplayQuestion(data.results[0].question)
         setCorrectAnswer(data.results[0].correct_answer)
@@ -38,6 +38,7 @@ const Quiz = ({ location }) => {
       }
     }
     fetchQuizData()
+    
   }, [category, questionAmount])
 
   function displayAnswers() {
