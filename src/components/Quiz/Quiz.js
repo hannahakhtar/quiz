@@ -19,8 +19,6 @@ const Quiz = ({ location }) => {
   const [score, setScore] = useState(0)
   const [gameOver, setGameOver] = useState(false)
 
-  // ? if user goes to app/play from url bar, they will have error because cat/question are unifned
-
   const category = location.state.category
   const questionAmount = location.state.questionAmount
   const { width, height } = useWindowSize()
@@ -34,7 +32,6 @@ const Quiz = ({ location }) => {
         setCorrectAnswer(data.results[0].correct_answer)
         setIncorrectAnswers(data.results[0].incorrect_answers)
         setLoading(false)
-        // ? if error is becuase of one of the response calls (to do with questions or token), action and then call function again?
       } catch (error) {
         setIsError(true)
         setLoading(false)
@@ -55,24 +52,11 @@ const Quiz = ({ location }) => {
     </div>
   }
 
-  // ? if answer is correct, turn green. If answer is wrong, turn the clicked one red and the right answer green. After one second, do everything else.
-
-  function prepareNextQuestion(button) {
-    setCurrentQuestion(currentQuestion + 1)
-    setDisplayQuestion(quizData[currentQuestion + 1].question)
-    setCorrectAnswer(quizData[currentQuestion + 1].correct_answer)
-    setIncorrectAnswers(quizData[currentQuestion + 1].incorrect_answers)
-    // button.classList.toggle("correct")
-  }
-
   function checkAnswers(answer) {
     if (currentQuestion + 1 < questionAmount) {
       if (answer === correctAnswer) {
-        const button = document.getElementById(answer)
-        button.classList.add("correct")
-        button.classList.remove("active")
         setScore(score + 1) 
-        setTimeout(prepareNextQuestion(button), 1000)
+        prepareNextQuestion()
       } else {
         prepareNextQuestion()
       }
@@ -81,21 +65,25 @@ const Quiz = ({ location }) => {
     }
   }
 
+  function prepareNextQuestion(button) {
+    setCurrentQuestion(currentQuestion + 1)
+    setDisplayQuestion(quizData[currentQuestion + 1].question)
+    setCorrectAnswer(quizData[currentQuestion + 1].correct_answer)
+    setIncorrectAnswers(quizData[currentQuestion + 1].incorrect_answers)
+  }
+
   function gameOverMessage() {
     if (score / questionAmount < 0.5)  {
       const lessThan50Percent = ["Well tried!", "Better luck next time!", "You gave it a good go!"]
       const randomMessage = lessThan50Percent[Math.floor(Math.random() * lessThan50Percent.length)]
-      console.log(randomMessage)
       return randomMessage
     } else if (score / questionAmount >= 0.5 && score / questionAmount < 0.9) {
       const between50And80 = ["Well done, you got more than half right!", "Really good attempt - can you do better next time?!", "So close!"]
       const randomMessage = between50And80[Math.floor(Math.random() * between50And80.length)]
-      console.log(randomMessage)
       return randomMessage
     } else {
       const fullMarks = ["Amazing work!", "Full marks - take a bow!!", "Quiz Pro!"]
       const randomMessage = fullMarks[Math.floor(Math.random() * fullMarks.length)]
-      console.log(randomMessage)
       return randomMessage
     }
   }
