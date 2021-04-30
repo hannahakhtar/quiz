@@ -73,11 +73,11 @@ const Quiz = ({ location }) => {
   }
 
   function gameOverMessage() {
-    if (score / questionAmount < 0.5)  {
+    if (score / questionAmount <= 0.5)  {
       const lessThan50Percent = ["Well tried!", "Better luck next time!", "You gave it a good go!"]
       const randomMessage = lessThan50Percent[Math.floor(Math.random() * lessThan50Percent.length)]
       return randomMessage
-    } else if (score / questionAmount >= 0.5 && score / questionAmount < 0.9) {
+    } else if (score / questionAmount > 0.5 && score / questionAmount < 0.9) {
       const between50And80 = ["Well done, you got more than half right!", "Really good attempt - can you do better next time?!", "So close!"]
       const randomMessage = between50And80[Math.floor(Math.random() * between50And80.length)]
       return randomMessage
