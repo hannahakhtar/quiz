@@ -11,8 +11,6 @@ $medium-aquamarine: #57cc99ff;
 $light-green: #80ed99ff;
 $tea-green: rgb(195, 221, 198);
 
-// * local variables
-
 body {
   font-family: 'Martel Sans', sans-serif;
   height: 100vh;
@@ -23,13 +21,15 @@ p {
   font-size: 1em;
 }
 
-.btn {
-  background-color: $cadet-blue;
+.btn-custom, .dropdown-toggle {
+  background-color: yellow;
+  color: black;
   border: none;
+  border-radius: 20px;
   padding: 0.5em;
 }
 
-.btn:hover:active {
+.btn:hover {
   background-color: $medium-aquamarine;
 }
 
@@ -38,7 +38,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black;
+  background-color: #ff6699;
 }
 
 #home, #quiz {
@@ -67,13 +67,22 @@ p {
 }
 
 .dropdown-menu {
-  max-height: 10em;
+  max-height: 12em;
   overflow-y: scroll;
   overflow: auto;
 }
 
 .dropdown-item:hover {
-  background-color: blue;
+  background-color: $medium-aquamarine;
+}
+
+#quizText {
+  display: flex;
+  justify-content: space-around;
+}
+
+#question {
+  margin: 1em;
 }
 
 #playerChoice {
@@ -82,4 +91,8 @@ p {
 
 .answerButton, #categoryDropdown, #questionNumberDropdown {
   margin: 5px;
+}
+
+.gameOverText {
+  padding: 0.3em;
 }

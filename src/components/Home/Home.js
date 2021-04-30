@@ -33,7 +33,7 @@ const Home = () => {
       </Container>
       <Container id="selections">
         <Dropdown className="dropdown">
-          <Dropdown.Toggle id="categoryDropdown">
+          <Dropdown.Toggle id="categoryDropdown" variant="custom">
             {categoryToggle}
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -65,7 +65,7 @@ const Home = () => {
           </Dropdown.Menu>
         </Dropdown>
         <Dropdown className="dropdown">
-          <Dropdown.Toggle id="questionNumberDropdown">
+          <Dropdown.Toggle id="questionNumberDropdown" variant="custom">
             {questionsToggle}
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -83,7 +83,7 @@ const Home = () => {
             <Link to={{
               pathname: "/quiz-app/play",
               state: { categoryKey, questionAmount }
-            }}><Button variant="primary">Let's Go!</Button></Link>
+            }}><Button variant="custom">Let's Go!</Button></Link>
           </div>
         }
       </Container>
