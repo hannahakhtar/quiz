@@ -11,9 +11,9 @@ function App() {
   return <>
     <BrowserRouter>
       <Switch>
-        <Route exact path="/quiz-app" component={Home} />
-        <Route exact path="/quiz-app/play" component={Quiz} />
-        <Redirect to="/quiz-app/not-found"/>
+        <Route exact path="/quiz" component={Home} />
+        <Route exact path="/quiz/play" component={Quiz} />
+        <Redirect to="/quiz/not-found"/>
       </Switch>
     </BrowserRouter>
   </>

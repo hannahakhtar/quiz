@@ -65,7 +65,7 @@ const Home = () => {
           </Dropdown.Menu>
         </Dropdown>
         <Dropdown className="dropdown">
-          <Dropdown.Toggle id="questionNumberDropdown" variant="custom">
+          <Dropdown.Toggle id="questionNumberDropdown">
             {questionsToggle}
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -81,7 +81,7 @@ const Home = () => {
           <div id="letsGo">
             <p id="playerChoice">You've chosen {questionAmount} questions from the "{categoryName}" category!</p>
             <Link to={{
-              pathname: "/quiz-app/play",
+              pathname: "/quiz/play",
               state: { categoryKey, questionAmount }
             }}><Button variant="custom">Let's Go!</Button></Link>
           </div>

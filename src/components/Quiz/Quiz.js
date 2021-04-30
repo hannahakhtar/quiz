@@ -103,7 +103,7 @@ const Quiz = ({ location }) => {
   if (isError) {
     return <>
       <h2>There are not enough questions available for this category.</h2>
-      <Link to={{ pathname: "/quiz-app/" }}><Button variant="custom">Choose again?</Button></Link>
+      <Link to={{ pathname: "/quiz/" }}><Button variant="custom">Choose again?</Button></Link>
     </>
   }
 
@@ -124,7 +124,7 @@ const Quiz = ({ location }) => {
       <Container id="gameOver">
         <h2 className="gameOverText">{gameOverMessage()}</h2>
         <h2 className="gameOverText">Your final score was {score} out of {questionAmount}!</h2>
-        <Link to={{ pathname: "/quiz-app/" }}><Button variant="custom">Play again?</Button></Link>
+        <Link to={{ pathname: "/quiz/" }}><Button variant="custom">Play again?</Button></Link>
         <Confetti
           width={width}
           height={height}
