@@ -65,7 +65,7 @@ const Home = () => {
           </Dropdown.Menu>
         </Dropdown>
         <Dropdown className="dropdown">
-          <Dropdown.Toggle id="questionNumberDropdown">
+          <Dropdown.Toggle id="questionNumberDropdown" variant="custom">
             {questionsToggle}
           </Dropdown.Toggle>
           <Dropdown.Menu>
@@ -74,7 +74,6 @@ const Home = () => {
             <Dropdown.Item onSelect={handleQuestionAmountSelect} eventKey="20">20 questions</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-
       </Container>
       <Container>
         {categoryKey && questionAmount &&
