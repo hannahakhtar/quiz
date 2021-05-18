@@ -76,7 +76,7 @@ const Home = () => {
         </Dropdown>
       </Container>
       <Container>
-        {categoryKey && questionAmount &&
+        {questionAmount &&
           <div id="letsGo">
             <p id="playerChoice">You've chosen {questionAmount} questions from the "{categoryName}" category!</p>
             <Link to={{

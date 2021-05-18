@@ -1,10 +1,11 @@
 
 # Currently working on the adding the following functionality:
 
+* Random category not currently able to be selected by user.
 * Highlighting answer as correct or incorrect (and showing correct button in that instance).
-* Using session tokens to keep track of what questions have already been retrieved from the API; Creating error boundaries depending on result of the response code.
-* Fixing special characters currently showing on some questions/answers that the Base64 decoding has not rectified.
+* Using session tokens to track which questions have already been retrieved from the API; Creating error boundaries depending on result of the response code.
 * Displaying a user's high scores, using local storage.
+* Testing.
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 

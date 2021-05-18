@@ -38,7 +38,7 @@ const Quiz = ({ location }) => {
       }
     }
     fetchQuizData()
-    
+
   }, [category, questionAmount])
 
   function displayAnswers() {
@@ -56,7 +56,7 @@ const Quiz = ({ location }) => {
   function checkAnswers(answer) {
     if (currentQuestion + 1 < questionAmount) {
       if (answer === correctAnswer) {
-        setScore(score + 1) 
+        setScore(score + 1)
         prepareNextQuestion()
       } else {
         prepareNextQuestion()
@@ -73,8 +73,14 @@ const Quiz = ({ location }) => {
     setIncorrectAnswers(quizData[currentQuestion + 1].incorrect_answers)
   }
 
+  function decodeAndDisplayQuestion() {
+    return decodeURIComponent(atob(displayQuestion).split('').map(function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+  }
+
   function gameOverMessage() {
-    if (score / questionAmount <= 0.5)  {
+    if (score / questionAmount <= 0.5) {
       const lessThan50Percent = ["Well tried!", "Better luck next time!", "You gave it a good go!"]
       const randomMessage = lessThan50Percent[Math.floor(Math.random() * lessThan50Percent.length)]
       return randomMessage
@@ -91,16 +97,16 @@ const Quiz = ({ location }) => {
 
   if (loading) {
     return <div id="loader">
-    <Loader
-      type="Circles"
-      color=" #40e0d0"
-      height={200}
-      width={200}
-      timeout={3000}
-    />
+      <Loader
+        type="Circles"
+        color=" #40e0d0"
+        height={200}
+        width={200}
+        timeout={3000}
+      />
     </div>
   }
-  
+
   if (isError) {
     return <>
       <h2>There are not enough questions available for this category.</h2>
@@ -112,10 +118,10 @@ const Quiz = ({ location }) => {
     {!gameOver &&
       <Container id="quizContainer">
         <Container id="quizText">
-        <h3>Question {currentQuestion + 1} of {questionAmount}</h3>
-        <h3>Score: {score}</h3>
+          <h3>Question {currentQuestion + 1} of {questionAmount}</h3>
+          <h3>Score: {score}</h3>
         </Container>
-        <h2 id="question">{atob(displayQuestion)}</h2>
+        <h2 id="question">{decodeAndDisplayQuestion()}</h2>
         <div>
           {displayAnswers()}
         </div>
