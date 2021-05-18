@@ -1,8 +1,7 @@
 
 # Currently working on the adding the following functionality:
 
-* Random category not currently able to be selected by user.
-* Highlighting answer as correct or incorrect (and showing correct button in that instance).
+* Highlighting answer as correct or incorrect using red/green before displaying next question.
 * Using session tokens to track which questions have already been retrieved from the API; Creating error boundaries depending on result of the response code.
 * Displaying a user's high scores, using local storage.
 * Testing.
