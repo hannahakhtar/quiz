@@ -7,6 +7,10 @@ import Confetti from 'react-confetti'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
+import greenTickImage from '../../images/green-tick.png'
+import redCrossImage from '../../images/red-cross.png'
+
+
 const Quiz = ({ location }) => {
 
   const [loading, setLoading] = useState(true)
@@ -17,6 +21,8 @@ const Quiz = ({ location }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [isError, setIsError] = useState(false)
   const [score, setScore] = useState(0)
+  const [greenTick, showGreenTick] = useState(false)
+  const [redCross, showRedCross] = useState(false)
   const [gameOver, setGameOver] = useState(false)
 
   const category = location.state.categoryKey
@@ -56,21 +62,25 @@ const Quiz = ({ location }) => {
   function checkAnswers(answer) {
     if (currentQuestion + 1 < questionAmount) {
       if (answer === correctAnswer) {
+        showGreenTick(true)
         setScore(score + 1)
-        prepareNextQuestion()
+        setTimeout(prepareNextQuestion, 500)
       } else {
-        prepareNextQuestion()
+        showRedCross(true)
+        setTimeout(prepareNextQuestion, 500)
       }
     } else {
       setGameOver(true)
     }
   }
-
+  
   function prepareNextQuestion(button) {
     setCurrentQuestion(currentQuestion + 1)
     setDisplayQuestion(quizData[currentQuestion + 1].question)
     setCorrectAnswer(quizData[currentQuestion + 1].correct_answer)
     setIncorrectAnswers(quizData[currentQuestion + 1].incorrect_answers)
+    showGreenTick(false)
+    showRedCross(false)
   }
 
   function decodeAndDisplayQuestion() {
@@ -123,8 +133,14 @@ const Quiz = ({ location }) => {
         </Container>
         <h2 id="question">{decodeAndDisplayQuestion()}</h2>
         <div>
-          {displayAnswers()}
+          {displayAnswers()} 
         </div>
+        {greenTick &&
+          <img src={greenTickImage} alt="green tick" id="tick" />
+        }
+        {redCross &&
+          <img src={redCrossImage} alt="red cross" id="cross" />
+        }
       </Container>
     }
     {gameOver &&
